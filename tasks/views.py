@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.decorators.http import require_http_methods
 from django.views.generic.edit import CreateView
-from django.shortcuts import redirect
+from django.utils import timezone
 from django.shortcuts import render
 
 from .models import Task
@@ -18,6 +18,7 @@ def mark_task_as_completed(request, pk):
     try:
         task = Task.objects.get(pk=pk)
         task.is_completed = True
+        task.completion_time = timezone.now()
         task.save()
         # Явно возвращаем успешный ответ
 
