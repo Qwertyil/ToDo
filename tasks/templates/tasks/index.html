@@ -1,10 +1,118 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список задач</title>
+    <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
 </head>
 <body>
+    <div class="container">
+        <h1>Список задач</h1>
+        <div class="task-list">
+            {% if tasks %}
+                {% for task in tasks %}
+                    <div class="task-card" onclick="openModal('{{ task.title }}', '{{ task.additional }}', '{{ task.creation_time }}', '{{ task.pk }}')">
+                        <p class="title">{{ task.title }}</p>
+                        <p class="creation_time">Создано: {{ task.creation_time }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-tasks">
+                    <p>Нет задач!</p>
+                </div>
+            {% endif %}
+        </div>
 
+        <div class="create-btn-container">
+            <a href="{% url 'tasks:new_task' %}" class="create-btn">Создать задачу</a>
+        </div>
+    </div>
+
+    <!-- Модальное окно -->
+     <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h2 class="modal-title" id="modalTitle"></h2>
+            <p class="modal-additional" id="modalAdditional"></p>
+            <p class="modal-time" id="modalTime"></p>
+            <button class="complete-btn" id="completeBtn">Пометить как выполненное</button>
+        </div>
+    </div>
+
+    <script>
+        let currentTaskId = null;
+
+        function openModal(title, additional, time, taskId) {
+            currentTaskId = taskId;
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalAdditional').textContent = additional;
+            document.getElementById('modalTime').textContent = 'Создано: ' + time;
+            document.getElementById('taskModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('taskModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Закрытие модального окна при клике вне его
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('taskModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Обработчик для кнопки "Пометить как выполненное"
+document.getElementById('completeBtn').addEventListener('click', function() {
+        if (!currentTaskId) {
+            console.error('ID задачи не установлен');
+            return;
+        }
+
+        console.log('Отправка запроса для задачи ID:', currentTaskId);
+
+        fetch(`/tasks/${currentTaskId}/`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({ completed: true })
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Ошибка сети');
+            return response.json();
+        })
+        .then(data => {
+            console.log('Успех:', data);
+            window.location.reload();
+        })
+        .catch(error => {
+            console.error('Ошибка:', error);
+            alert('Не удалось обновить задачу');
+        });
+        });
+
+        // Функция для получения CSRF токена (для Django)
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
 </body>
 </html>
