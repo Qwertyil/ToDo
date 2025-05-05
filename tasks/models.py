@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+from django.utils import timezone
 
 
 class Task(models.Model):
@@ -10,6 +12,14 @@ class Task(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('tasks:edit_task', kwargs={'pk': self.pk})
+
+    def mark_as_completed(self):
+        self.is_completed = True
+        self.completion_time = timezone.now()  # Устанавливаем текущую дату
+        self.save()
 
     class Meta:
         verbose_name = 'Задача'

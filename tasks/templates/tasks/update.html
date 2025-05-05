@@ -1,0 +1,11 @@
+{% extends "layout/task_form.html" %}
+
+{% block title %}Update {% endblock %}
+
+{% block todo_prefix %}<p class="app-title form-title">Update</p>{% endblock %}
+
+{% block save_button_name %}Update task{% endblock %}
+
+{% block additional_buttons %}
+    <a href="{% url 'tasks:complete_task' pk=task.pk %}" class="add-button" style="margin-top: 10px">Mark as completed</a>
+{% endblock %}
