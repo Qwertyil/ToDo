@@ -1,0 +1,20 @@
+{% extends 'layout/basic.html' %}
+
+{% block body %}
+    <div class="tasks">
+        <div class="task-list">
+            {% if themes %}
+                {% for theme in themes %}
+                <a href="{% url 'tasks:edit_task' pk=theme.pk %}" class="task-item">
+                    <div class="task-text">{{ theme.name }}</div>
+                </a>
+                {% endfor %}
+            {% else %}
+                <div class="task-item">
+                    <div class="task-text">No themes</div>
+                </div>
+            {% endif %}
+        </div>
+        <a href="{% url 'tasks:new_task' %}" class="add-button">+ Theme</a>
+    </div>
+{% endblock %}

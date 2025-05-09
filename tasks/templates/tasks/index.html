@@ -8,7 +8,7 @@
                 <a href="/tasks/theme_{{theme.pk}}" class="theme-item">{{ theme.name }}</a>
             {% endfor %}
         </div>
-        <a class="add-button">+ Theme</a>
+        <a class="add-button">Edit themes</a>
     </div>
 
     <!-- Список задач -->
@@ -18,7 +18,12 @@
                 {% for task in tasks %}
                     <a href="{% url 'tasks:edit_task' pk=task.pk %}" class="task-item">
                         <div class="task-text">{{ task.title }}</div>
-                        <div class="task-date">{{ task.creation_time }}</div>
+                        <div class="tasks-bottom-line">
+                            <div class="task-date">{{ task.creation_time }}</div>
+                            {% if task.theme is not None %}
+                                <div class="task-theme">{{ task.theme }}</div>
+                            {% endif %}
+                        </div>
                     </a>
                 {% endfor %}
             {% else %}

@@ -3,12 +3,20 @@ from django.urls import reverse
 from django.utils import timezone
 
 
+class Theme(models.Model):
+    name = models.CharField(max_length=30, verbose_name='Theme', unique=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Task(models.Model):
-    title = models.CharField(max_length=100, verbose_name='Задача')
-    additional = models.TextField(verbose_name='Дополнительная информация', null=True, blank=True)
-    creation_time = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
-    is_completed = models.BooleanField(default=False, verbose_name='Выполнена')
-    completion_time = models.DateTimeField(null=True, blank=True, verbose_name='Дата выполнения')
+    title = models.CharField(max_length=100, verbose_name='Task')
+    additional = models.TextField(verbose_name='Additional information', null=True, blank=True)
+    creation_time = models.DateTimeField(auto_now_add=True, verbose_name='Created at')
+    is_completed = models.BooleanField(default=False, verbose_name='Completed')
+    completion_time = models.DateTimeField(null=True, blank=True, verbose_name='Completion time')
+    theme = models.ForeignKey(Theme, null=True, blank=True, on_delete=models.SET_NULL, verbose_name='Theme')
 
     def __str__(self):
         return self.title
@@ -18,10 +26,10 @@ class Task(models.Model):
 
     def mark_as_completed(self):
         self.is_completed = True
-        self.completion_time = timezone.now()  # Устанавливаем текущую дату
+        self.completion_time = timezone.now()
         self.save()
 
     class Meta:
-        verbose_name = 'Задача'
-        verbose_name_plural = 'Задачи'
+        verbose_name = 'Task'
+        verbose_name_plural = 'Tasks'
         ordering = ['is_completed', '-creation_time']

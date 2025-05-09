@@ -2,14 +2,17 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView
 from django.shortcuts import render, get_object_or_404, redirect
 
-from .models import Task
+from .models import Task, Theme
 from .forms import TaskForm
 
 
-def index(request):
+def index(request, pk=None):
+    tasks = Task.objects.filter(is_completed=False)
+    if pk:
+        tasks = tasks.filter(theme=pk)
     context = {
-        'tasks': Task.objects.filter(is_completed=False),
-        'themes': {}
+        'tasks': tasks,
+        'themes': Theme.objects.all()
     }
     return render(request, 'tasks/index.html', context=context)
 
@@ -18,16 +21,19 @@ def mark_as_completed(request, pk):
     try:
         task = get_object_or_404(Task, pk=pk)
         task.mark_as_completed()
-        print('succes')
     except:
         pass
     finally:
         return redirect('tasks:index')
 
 
+def themes(request):
+    pass
+
+
 class TaskEditView(UpdateView):
     model = Task
-    fields = ['title', 'additional']
+    fields = ['title', 'additional', 'theme']
     template_name = 'tasks/update.html'
     success_url = reverse_lazy('tasks:index')
 
