@@ -1,0 +1,13 @@
+{% extends "layout/form.html" %}
+
+{% block title %}New {% endblock %}
+
+{% block todo_prefix %}<p class="app-title form-title">New</p>{% endblock %}
+
+{% block save_button_name %}Create task{% endblock %}
+
+{% block additional_buttons %}
+    <a href="{% url 'tasks:index' %}" class="add-button" style="margin-top: 10pt;">
+        Back
+    </a>
+{% endblock %}

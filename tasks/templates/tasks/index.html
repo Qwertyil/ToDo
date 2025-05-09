@@ -8,7 +8,7 @@
                 <a href="/tasks/theme_{{theme.pk}}" class="theme-item">{{ theme.name }}</a>
             {% endfor %}
         </div>
-        <a class="add-button">Edit themes</a>
+        <a class="add-button" href="{% url 'tasks:themes' %}">Edit themes</a>
     </div>
 
     <!-- Список задач -->

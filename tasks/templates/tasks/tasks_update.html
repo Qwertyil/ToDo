@@ -1,4 +1,4 @@
-{% extends "layout/task_form.html" %}
+{% extends "layout/form.html" %}
 
 {% block title %}Update {% endblock %}
 
@@ -8,4 +8,7 @@
 
 {% block additional_buttons %}
     <a href="{% url 'tasks:complete_task' pk=task.pk %}" class="add-button" style="margin-top: 10px">Mark as completed</a>
+    <a href="{% url 'tasks:index' %}" class="add-button" style="margin-top: 10pt;">
+        Back
+    </a>
 {% endblock %}

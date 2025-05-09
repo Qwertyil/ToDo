@@ -1,0 +1,9 @@
+{% extends "layout/form.html" %}
+
+{% block save_button_name %}Create theme{% endblock %}
+
+{% block additional_buttons %}
+    <a href="{% url 'tasks:themes' %}" class="add-button" style="margin-top: 10pt;">
+        Back
+    </a>
+{% endblock %}

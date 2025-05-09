@@ -1,11 +1,11 @@
 {% extends 'layout/basic.html' %}
 
 {% block body %}
-    <div class="tasks">
+    <div class="themes">
         <div class="task-list">
             {% if themes %}
                 {% for theme in themes %}
-                <a href="{% url 'tasks:edit_task' pk=theme.pk %}" class="task-item">
+                <a href="{% url 'tasks:delete_theme' pk=theme.pk %}" class="task-item">
                     <div class="task-text">{{ theme.name }}</div>
                 </a>
                 {% endfor %}
@@ -15,6 +15,7 @@
                 </div>
             {% endif %}
         </div>
-        <a href="{% url 'tasks:new_task' %}" class="add-button">+ Theme</a>
+        <a href="{% url 'tasks:new_theme' %}" class="add-button">+ Theme</a>
+        <a href="{% url 'tasks:index' %}" class="add-button" style="margin-top: 10pt;">Back</a>
     </div>
 {% endblock %}

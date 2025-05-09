@@ -1,9 +1,10 @@
 from django.urls import reverse_lazy
+from django.views.generic import DeleteView
 from django.views.generic.edit import CreateView, UpdateView
 from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Task, Theme
-from .forms import TaskForm
+from .forms import TaskForm, ThemeForm
 
 
 def index(request, pk=None):
@@ -25,24 +26,36 @@ def mark_as_completed(request, pk):
         task = get_object_or_404(Task, pk=pk)
         task.mark_as_completed()
     except:
-        pass
+        pass # TODO can display a warning message if an error occurs while marking a task as completed
     finally:
         return redirect('tasks:index')
 
 
 def themes(request):
-    pass
+    return render(request, 'tasks/themes.html', context={'themes': Theme.objects.all()})
+
+
+class ThemeCreateView(CreateView):
+    template_name = 'tasks/themes_new.html'
+    form_class = ThemeForm
+    success_url = reverse_lazy('tasks:themes')
+
+
+class ThemeDeleteView(DeleteView):
+    model =Theme
+    template_name = 'tasks/themes_confirm_delete.html'
+    success_url = reverse_lazy('tasks:themes')
 
 
 class TaskEditView(UpdateView):
     model = Task
     fields = ['title', 'additional', 'theme']
-    template_name = 'tasks/update.html'
+    template_name = 'tasks/tasks_update.html'
     success_url = reverse_lazy('tasks:index')
 
 
 class TaskCreateView(CreateView):
-    template_name = 'tasks/new.html'
+    template_name = 'tasks/tasks_new.html'
     form_class = TaskForm
     success_url = reverse_lazy('tasks:index')
 
