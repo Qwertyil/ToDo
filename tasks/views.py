@@ -8,11 +8,14 @@ from .forms import TaskForm
 
 def index(request, pk=None):
     tasks = Task.objects.filter(is_completed=False)
+    theme = 'All'
     if pk:
+        theme = get_object_or_404(Theme, pk=pk)
         tasks = tasks.filter(theme=pk)
     context = {
         'tasks': tasks,
-        'themes': Theme.objects.all()
+        'themes': Theme.objects.all(),
+        'theme': theme
     }
     return render(request, 'tasks/index.html', context=context)
 

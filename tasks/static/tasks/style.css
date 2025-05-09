@@ -180,6 +180,16 @@ body {
     justify-content: flex-end;
 }
 
+.tasks-header {
+    font-size: 26px;
+    text-align: center;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eee;
+}
+
 /* Кнопки */
 button, a {
     padding: 10px 15px;
