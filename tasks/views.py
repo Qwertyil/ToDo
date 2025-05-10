@@ -42,7 +42,7 @@ class ThemeCreateView(CreateView):
 
 
 class ThemeDeleteView(DeleteView):
-    model =Theme
+    model = Theme
     template_name = 'tasks/themes_confirm_delete.html'
     success_url = reverse_lazy('tasks:themes')
 
@@ -59,3 +59,8 @@ class TaskCreateView(CreateView):
     form_class = TaskForm
     success_url = reverse_lazy('tasks:index')
 
+
+class TaskDeleteView(DeleteView):
+    model = Task
+    template_name = 'tasks/tasks_confirm_delete.html'
+    success_url = reverse_lazy('tasks:index')

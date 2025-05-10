@@ -235,6 +235,7 @@ button:hover, a:hover {
     font-size: inherit;   /* Сначала пробуем наследование */
     /* Или явно указываем размер */
     font-size: 16px;
+    margin-top: 10pt;
 }
 
 .add-button:hover {

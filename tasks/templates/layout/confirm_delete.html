@@ -1,0 +1,17 @@
+{% extends 'layout/basic.html' %}
+
+{% block body %}
+    <div class="delete-confirmation">
+        <h1>{{ delete_model_name }} delete</h1>
+
+        <div class="object-info">
+            <p>Are you sure you want to delete {{ delete_model_name }} <strong>"{{ delete_object }}"</strong>?</p>
+        </div>
+
+        <form method="post" class="delete-form">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a href="{% url back_url_name %}" class="btn btn-secondary">Back</a>
+        </form>
+    </div>
+{% endblock %}
