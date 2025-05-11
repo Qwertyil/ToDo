@@ -1,10 +1,17 @@
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
+from django.core.exceptions import ValidationError
+
+
+def validate_reserved_values(value):
+    reserved_values = ['All', 'themes', 'actionBtn']
+    if value in reserved_values:
+        raise ValidationError(f"Name cannot be '{value}'")
 
 
 class Theme(models.Model):
-    name = models.CharField(max_length=30, unique=True)
+    name = models.CharField(max_length=30, unique=True, validators=[validate_reserved_values])
 
     def __str__(self):
         return self.name

@@ -183,7 +183,7 @@ body {
 }
 
 .task-theme {
-    font-size: 12px;
+    font-size: 1em;
     margin-top: 8px;
     display: flex;
     justify-content: flex-end;
@@ -217,6 +217,7 @@ button:hover, a:hover {
 .nav-button {
     background-color: #e0e0e0;
     color: #333;
+    width: 8em;
 }
 
 .nav-button:hover {

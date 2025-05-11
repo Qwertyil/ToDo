@@ -55,6 +55,14 @@ class TaskCreateView(CreateView):
     form_class = TaskForm
     success_url = reverse_lazy('tasks:index')
 
+    def get_initial(self):
+        initial = super().get_initial()
+        theme = self.request.GET.get('theme')
+        if theme and theme != 'All':
+            theme_object = get_object_or_404(Theme, name=theme)
+            initial['theme'] = theme_object
+        return initial
+
 
 class TaskDeleteView(DeleteView):
     model = Task

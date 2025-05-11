@@ -4,9 +4,9 @@
 {% block body %}
     <div class="left-panel">
         <div class="theme-list">
-            <a href="/tasks" class="theme-item">All</a>
+            <a href="/tasks" class="theme-item" id="All">All</a>
             {% for theme in themes %}
-                <a href="/tasks/theme_{{theme.pk}}" class="theme-item"
+                <a href="/tasks/theme_{{theme.pk}}" class="theme-item" id="{{theme.name}}"
                    data-delete-url="{% url 'tasks:delete_theme' pk=theme.pk %}"
                    oncontextmenu="showTaskMenu(this, event)">
                     {{ theme.name }}
@@ -18,8 +18,8 @@
 
     <!-- Список задач -->
     <div class="tasks">
-         <h2 class="tasks-header">{{ theme }}</h2>
-
+        <h2 class="tasks-header" id="theme">{{ theme }}</h2>
+        <script src="{% static 'tasks/mark_current_theme.js' %}"></script>
         <div class="task-list">
             {% if tasks %}
                 {% for task in tasks %}
@@ -43,7 +43,11 @@
                 </div>
             {% endif %}
         </div>
-        <a href="{% url 'tasks:new_task' %}" class="add-button">+ Task</a>
+        <a class="add-button" href="#" onclick="
+            const theme = document.getElementById('theme').innerHTML;
+            window.location.href = '{% url 'tasks:new_task' %}?theme=' + encodeURIComponent(theme);
+            return false;
+        ">+ Task</a>
     </div>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>

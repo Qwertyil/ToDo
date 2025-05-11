@@ -9,15 +9,17 @@
     <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
 </head>
 <body>
-    <!-- Навигационная панель -->
+    <!-- Navigation bar -->
     <div class="nav">
         <div class="app-title">
             {% block todo_prefix %}{% endblock %}ToDo
         </div>
         <div class="nav-buttons">
-            <button class="nav-button">Periodic</button>
-            <button class="nav-button">Completed</button>
-            <button class="nav-button">Main</button>
+            <button class="nav-button" id="periodic">Periodic</button>
+            <button class="nav-button" id="completed">Completed</button>
+            <button class="nav-button" id="main">Main</button>
+            <button class="nav-button" id="settings">Settings</button>
+            <script src="{% static 'tasks/mark_current_page_name.js' %}"></script>
         </div>
     </div>
     {% block body %}
