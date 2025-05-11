@@ -6,10 +6,14 @@
         <div class="theme-list">
             <a href="/tasks" class="theme-item">All</a>
             {% for theme in themes %}
-                <a href="/tasks/theme_{{theme.pk}}" class="theme-item">{{ theme.name }}</a>
+                <a href="/tasks/theme_{{theme.pk}}" class="theme-item"
+                   data-delete-url="{% url 'tasks:delete_theme' pk=theme.pk %}"
+                   oncontextmenu="showTaskMenu(this, event)">
+                    {{ theme.name }}
+                </a>
             {% endfor %}
         </div>
-        <a class="add-button" href="{% url 'tasks:themes' %}">Edit themes</a>
+        <a class="add-button" href="{% url 'tasks:new_theme' %}">+ Theme</a>
     </div>
 
     <!-- Список задач -->

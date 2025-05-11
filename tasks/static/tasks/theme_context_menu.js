@@ -1,5 +1,3 @@
-let activeContextMenu = null;
-
 function showTaskMenu(button, event) {
   event.preventDefault();
 
@@ -9,31 +7,15 @@ function showTaskMenu(button, event) {
     activeContextMenu = null;
   }
 
-    const menu = document.createElement("div");
-    menu.className = "custom-context-menu";
-
-    // Проверяем, является ли элемент темой (например, по наличию определенного класса или data-атрибута)
-    const isTheme = button.classList.contains('theme-item');
-
-    if (isTheme) {
-      // Меню для тем (только удаление)
-      menu.innerHTML = `
-        <div class="menu-pointer"></div>
-        <div class="menu-vertical">
-          <a href="${button.dataset.deleteUrl}" class="menu-link">🗑️ Delete</a>
-        </div>
-      `;
-    } else {
-      // Меню для задач (все пункты)
-      menu.innerHTML = `
-        <div class="menu-pointer"></div>
-        <div class="menu-vertical">
-          <a href="${button.dataset.editUrl}" class="menu-link">✏️ Edit</a>
-          <a href="${button.dataset.completeUrl}" class="menu-link">✅ Mark as completed</a>
-          <a href="${button.dataset.deleteUrl}" class="menu-link">🗑️ Delete</a>
-        </div>
-      `;
-    }
+  // Создаём меню с контейнером для стрелочки
+  const menu = document.createElement("div");
+  menu.className = "custom-context-menu";
+  menu.innerHTML = `
+    <div class="menu-pointer"></div>
+    <div class="menu-vertical">
+      <a href="${button.dataset.deleteUrl}" class="menu-link">🗑️ Delete</a>
+    </div>
+  `;
 
   document.body.appendChild(menu);
   activeContextMenu = menu;

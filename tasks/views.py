@@ -31,26 +31,22 @@ def mark_as_completed(request, pk):
         return redirect('tasks:index')
 
 
-def themes(request):
-    return render(request, 'tasks/themes.html', context={'themes': Theme.objects.all()})
-
-
 class ThemeCreateView(CreateView):
     template_name = 'tasks/themes_new.html'
     form_class = ThemeForm
-    success_url = reverse_lazy('tasks:themes')
+    success_url = reverse_lazy('tasks:index')
 
 
 class ThemeDeleteView(DeleteView):
     model = Theme
     template_name = 'tasks/themes_confirm_delete.html'
-    success_url = reverse_lazy('tasks:themes')
+    success_url = reverse_lazy('tasks:index')
 
 
 class TaskEditView(UpdateView):
     model = Task
     fields = ['title', 'additional', 'theme']
-    template_name = 'tasks/tasks_full.html'
+    template_name = 'tasks/tasks_edit.html'
     success_url = reverse_lazy('tasks:index')
 
 
