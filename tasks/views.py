@@ -50,7 +50,7 @@ class ThemeDeleteView(DeleteView):
 class TaskEditView(UpdateView):
     model = Task
     fields = ['title', 'additional', 'theme']
-    template_name = 'tasks/tasks_update.html'
+    template_name = 'tasks/tasks_full.html'
     success_url = reverse_lazy('tasks:index')
 
 
