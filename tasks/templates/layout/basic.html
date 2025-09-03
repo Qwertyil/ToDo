@@ -15,10 +15,10 @@
             {% block todo_prefix %}{% endblock %}ToDo
         </div>
         <div class="nav-buttons">
-            <button class="nav-button" id="periodic">Periodic</button>
-            <button class="nav-button" id="completed">Completed</button>
-            <button class="nav-button" id="main">Main</button>
-            <button class="nav-button" id="settings">Settings</button>
+            <a class="nav-button" id="periodic" href="{% url 'tasks:periodic' %}">Periodic</a>
+            <a class="nav-button" id="completed" href="{% url 'tasks:completed_tasks' %}">Completed</a>
+            <a class="nav-button" id="main" href="{% url 'tasks:index' %}">Main</a>
+            <a class="nav-button" id="settings" href="{% url 'tasks:settings' %}">Settings</a>
             <script src="{% static 'tasks/mark_current_page_name.js' %}"></script>
         </div>
     </div>

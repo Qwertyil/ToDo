@@ -1,5 +1,13 @@
 let activeContextMenu = null;
 
+function getCSRFToken() {
+  const cookieValue = document.cookie
+    .split('; ')
+    .find(row => row.startsWith('csrftoken='))
+    ?.split('=')[1];
+  return cookieValue;
+}
+
 function showTaskMenu(button, event) {
   event.preventDefault();
 
@@ -29,7 +37,10 @@ function showTaskMenu(button, event) {
         <div class="menu-pointer"></div>
         <div class="menu-vertical">
           <a href="${button.dataset.editUrl}" class="menu-link">✏️ Edit</a>
-          <a href="${button.dataset.completeUrl}" class="menu-link">✅ Mark as completed</a>
+          <form method="POST" action="${button.dataset.completeUrl}">
+            <input type="hidden" name="csrfmiddlewaretoken" value="${getCSRFToken()}">
+            <button type="submit" class="menu-link">✅ Mark as completed</button>
+          </form>
           <a href="${button.dataset.deleteUrl}" class="menu-link">🗑️ Delete</a>
         </div>
       `;

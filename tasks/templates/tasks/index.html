@@ -3,13 +3,14 @@
 
 {% block body %}
     <div class="left-panel">
+        <h2 class="tasks-header">Themes</h2>
         <div class="theme-list">
-            <a href="/tasks" class="theme-item" id="All">All</a>
+            <a href="{% url 'tasks:index' %}" class="theme-item" id="All"><span>All</span><span>{{ tasks_count }}</span></a>
             {% for theme in themes %}
-                <a href="/tasks/theme_{{theme.pk}}" class="theme-item" id="{{theme.name}}"
+                <a href="{% url 'tasks:tasks_with_concrete_theme' pk=theme.pk %}" class="theme-item" id="{{theme.name}}"
                    data-delete-url="{% url 'tasks:delete_theme' pk=theme.pk %}"
                    oncontextmenu="showTaskMenu(this, event)">
-                    {{ theme.name }}
+                    <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ theme.name }}</span><span>{{ theme.task_count }}</span>
                 </a>
             {% endfor %}
         </div>
@@ -18,7 +19,7 @@
 
     <!-- Список задач -->
     <div class="tasks">
-        <h2 class="tasks-header" id="theme">{{ theme }}</h2>
+        <h2 class="tasks-header"><span id="theme">{{ theme }}</span></h2>
         <script src="{% static 'tasks/mark_current_theme.js' %}"></script>
         <div class="task-list">
             {% if tasks %}
@@ -30,10 +31,10 @@
                                 oncontextmenu="showTaskMenu(this, event)">
                         <div class="task-text">{{ task.title }}</div>
                         <div class="tasks-bottom-line">
-                            <div class="task-date">{{ task.creation_time }}</div>
-                            {% if task.theme is not None %}
-                                <div class="task-theme">{{ task.theme }}</div>
-                            {% endif %}
+                        <div class="task-date">{{ task.creation_time }}</div>
+                        {% if task.theme is not None %}
+                            <div class="task-theme">{{ task.theme }}</div>
+                        {% endif %}
                         </div>
                     </a>
                 {% endfor %}

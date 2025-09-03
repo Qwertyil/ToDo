@@ -1,0 +1,43 @@
+{% extends "layout/basic.html" %}
+{% load static %}
+
+{% block body %}
+<div class="left-panel">
+    <h2 class="tasks-header">Themes</h2>
+    <div class="theme-list">
+        <a href="{% url 'tasks:completed_tasks' %}" class="theme-item" id="All">All</a>
+        {% for theme in themes %}
+            <a href="{% url 'tasks:completed_tasks_with_concrete_theme' pk=theme.pk %}" class="theme-item" id="{{theme.name}}"
+               data-delete-url="{% url 'tasks:delete_theme' pk=theme.pk %}"
+               oncontextmenu="showTaskMenu(this, event)">
+                {{ theme.name }}
+            </a>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="completed-tasks">
+    <h2 class="tasks-header"><span id="theme">{{ theme }}</span> completed tasks</h2>
+    <script src="{% static 'tasks/mark_current_theme.js' %}"></script>
+    <div class="task-list">
+        {% if tasks %}
+            {% for task in tasks %}
+                <a class="task-item" href="{% url 'tasks:completed_task_info' pk=task.pk %}">
+                    <div class="task-text">{{ task.title }}</div>
+                    <div class="tasks-bottom-line">
+                        <div class="task-date">from {{ task.creation_time }}  to  {{ task.completion_time }}</div>
+                        {% if task.theme is not None %}
+                            <div class="task-theme">{{ task.theme }}</div>
+                        {% endif %}
+                    </div>
+                </a>
+            {% endfor %}
+        {% else %}
+            <div class="task-item">
+                <div class="task-text">No completed tasks</div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+

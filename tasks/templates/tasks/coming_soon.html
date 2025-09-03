@@ -1,0 +1,14 @@
+{% extends 'layout/basic.html' %}
+
+{% block body %}
+    <div class="container">
+        <div class="form-wrapper">
+            <div class="form-card">
+                <h1 class="tasks-header">Coming Soon</h1>
+                <div class="actions">
+                    <a href="{% url 'tasks:index' %}" class="add-button">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

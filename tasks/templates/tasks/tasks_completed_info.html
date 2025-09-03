@@ -1,0 +1,14 @@
+{% extends "layout/form.html" %}
+
+{% block title %}Completed {% endblock %}
+
+{% block todo_prefix %}<p class="app-title form-title">Completed</p>{% endblock %}
+
+{% block disable_save_button %}{% endblock %}
+
+{% block additional_buttons %}
+<form method="POST" action="{% url 'tasks:delete_completed_task' task.pk %}">
+    {% csrf_token %}
+    <button type="submit" class="add-button btn-danger">Delete</button>
+</form>
+{% endblock %}

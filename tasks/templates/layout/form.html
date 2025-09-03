@@ -27,12 +27,13 @@
                             {% endif %}
                         </div>
                     {% endfor %}
-
-                    <button type="submit" class="add-button">
-                        {% block save_button_name %}{% endblock %}
-                    </button>
+                    {% block disable_save_button %}
+                    <button type="submit" class="add-button">Save</button>
+                    {% endblock %}
                     <button onclick="history.back()" class="add-button">Back</button>
                 </form>
+                {% block additional_buttons %}
+                {% endblock %}
             </div>
         </div>
     </div>

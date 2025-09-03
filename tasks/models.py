@@ -23,7 +23,7 @@ class Task(models.Model):
     creation_time = models.DateTimeField(auto_now_add=True, verbose_name='Created at')
     is_completed = models.BooleanField(default=False, verbose_name='Completed')
     completion_time = models.DateTimeField(null=True, blank=True, verbose_name='Completion time')
-    theme = models.ForeignKey(Theme, null=True, blank=True, on_delete=models.SET_NULL, verbose_name='Theme')
+    theme = models.ForeignKey(Theme, related_name='tasks', null=True, blank=True, on_delete=models.SET_NULL, verbose_name='Theme')
 
     def __str__(self):
         return self.title
